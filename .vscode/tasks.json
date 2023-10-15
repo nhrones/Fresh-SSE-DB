@@ -1,0 +1,13 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+      {
+         "label": "PREVIEW",
+         "type": "shell",
+         "command": "deno run -A --unstable main.ts",
+         "problemMatcher": [
+            "$deno"
+         ],
+      }
+   ]
+}
