@@ -2,18 +2,18 @@
 // This file SHOULD be checked into source version control.
 // This file is automatically updated during development when running `dev.ts`.
 
-import * as $0 from "./routes/_middleware.ts";
-import * as $1 from "./routes/api/Rpc.ts";
-import * as $2 from "./routes/api/kvdb.ts";
-import * as $3 from "./routes/api/post.ts";
+import * as $0 from "./routes/SSERPC/Registration.ts";
+import * as $1 from "./routes/SSERPC/Requests.ts";
+import * as $2 from "./routes/SSERPC/db.ts";
+import * as $3 from "./routes/_middleware.ts";
 import * as $4 from "./routes/index.tsx";
 
 const manifest = {
   routes: {
-    "./routes/_middleware.ts": $0,
-    "./routes/api/Rpc.ts": $1,
-    "./routes/api/kvdb.ts": $2,
-    "./routes/api/post.ts": $3,
+    "./routes/SSERPC/Registration.ts": $0,
+    "./routes/SSERPC/Requests.ts": $1,
+    "./routes/SSERPC/db.ts": $2,
+    "./routes/_middleware.ts": $3,
     "./routes/index.tsx": $4,
   },
   islands: {},
