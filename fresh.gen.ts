@@ -5,7 +5,7 @@
 import * as $0 from "./routes/SSERPC/Registration.ts";
 import * as $1 from "./routes/SSERPC/Requests.ts";
 import * as $2 from "./routes/SSERPC/db.ts";
-import * as $3 from "./routes/_middleware.ts";
+import * as $3 from "./routes/SSERPC/_middleware.ts";
 import * as $4 from "./routes/index.tsx";
 
 const manifest = {
@@ -13,7 +13,7 @@ const manifest = {
     "./routes/SSERPC/Registration.ts": $0,
     "./routes/SSERPC/Requests.ts": $1,
     "./routes/SSERPC/db.ts": $2,
-    "./routes/_middleware.ts": $3,
+    "./routes/SSERPC/_middleware.ts": $3,
     "./routes/index.tsx": $4,
   },
   islands: {},
