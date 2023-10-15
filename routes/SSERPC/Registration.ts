@@ -4,7 +4,7 @@ import {
    getRow,
    getAll,
    setRow,
-} from './kvdb.ts' 
+} from './db.ts' 
 
 import { HandlerContext } from "$fresh/server.ts";
 
