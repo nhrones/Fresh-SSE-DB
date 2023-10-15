@@ -1,16 +1,9 @@
-# Fresh project
+# Fresh SSE-DB 
 
-Your new Fresh project is ready to go. You can follow the Fresh "Getting
-Started" guide here: https://fresh.deno.dev/docs/getting-started
+This is a Fresh example of using the SSE-RPC api to view DenoKv data
 
 ### Usage
+With the TreeClient app opened:  
 
-Make sure to install Deno: https://deno.land/manual/getting_started/installation
-
-Then start the project:
-
-```
-deno task start
-```
-
-This will watch the project directory and restart as necessary.
+add the following url:
+https://fresh-sse-db.deno.dev/

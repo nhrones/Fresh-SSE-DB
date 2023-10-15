@@ -7,7 +7,8 @@ const msg = `
 
     These API handlers are used to examine the DenoKv instance in this app.
 
-    To use this service from the TreeClient add
+    To use this service, with the TreeClient open,add the following url:
+    https://fresh-sse-db.deno.dev/
 `
 
 export default function Home() {
