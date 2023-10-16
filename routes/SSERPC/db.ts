@@ -1,13 +1,5 @@
+/// <reference lib="deno.unstable"
 // deno-lint-ignore-file no-explicit-any
-
-/** 
- *  A cache of a KvDb-collection.    
- *  This is a consistant cache,   
- *  It's kept in sync with the Deno.Kv database.   
- *  We load it once on cold start.
- */
-export let shadowCache: Map<any, any>
-const DEV = true
 //@ts-ignore ?
 let db: Deno.Kv
 async function initDB() { 
@@ -16,23 +8,11 @@ async function initDB() {
 }  
 
 /**
- * load an in-memory dataset            
- */
-export const loadCache = async () => {
-   if (!shadowCache) {
-      const result = await getAll()
-      shadowCache = new Map(result)
-   }
-   fireMutationEvent(-0, "cacheLoaded")
-}
-
-/**
  * delete a record
  */
 export async function deleteRow(key: any[]) {
    if (!db) await initDB()
    const result = await db.delete(key);
-   shadowCache.delete(key[1])
    fireMutationEvent(key[1], "RowDeleted")
    return result
 }
@@ -50,12 +30,9 @@ export async function getRow(key: any[], _version: string) {
  * set a record
  */
 export async function setRow(key: any[], value: any) {
-   if (DEV === true) console.info('called setRow with key = ', key)
    if (!db) await initDB()
    const result = await db.set(key, value);
    if (result.versionstamp) {
-      if (DEV === true) console.log(`set shadowCache id ${key[1]} = ${JSON.stringify(value)}`)
-      shadowCache.set(key[1], value)
       fireMutationEvent(key[1], "SetRow")
    } else {
       console.error('kvdb.setRow failed!')
@@ -67,34 +44,28 @@ export async function setRow(key: any[], value: any) {
  *  bulk fetch - get record collection 
  */
 export async function getAll() {
-   const fetchStart = performance.now()
-   if (!shadowCache)  shadowCache = new Map()
+   const  cache = new Map()
    if (!db) await initDB()
-   // we'll just rebuild our cache for each new client
    const entries = db.list({ prefix: [] })
    for await (const entry of entries) {
-      if (DEV === true) console.info(`key:${entry.key}. val:`, entry.value)
-      shadowCache.set(entry.key, entry.value)
+      cache.set(entry.key, entry.value)
    }
 
-   const fetchTime = (performance.now() - fetchStart).toFixed(2)
-   if (DEV === true) console.log(`Loading ${shadowCache.size} records in cache took -  ${fetchTime}ms`)
-   if (shadowCache.size < 2) {
-      if (DEV === true) console.warn('No data found! Loading initial testset!')
+   if (cache.size < 2) {
       await loadTestSet()
       const entries = db.list({ prefix: [] })
       for await (const entry of entries) {
-         if (DEV === true) console.info(`key:${entry.key}. val:`, entry.value)
-         shadowCache.set(entry.key, entry.value)
+         cache.set(entry.key, entry.value)
       }
    }
-   return Array.from(shadowCache.entries())
+   return Array.from(cache.entries())
 }
 
-/** delete all rows from the db */
+/** 
+ * delete all rows from the db
+ */
 export async function clearAll() {
    if (!db) await initDB()
-   if (DEV === true) console.warn('clearing data')
    getAllKeys()
       .then((keys) => {
          keys.forEach( (key) => {
@@ -103,7 +74,9 @@ export async function clearAll() {
       })
 }
 
-/**  bulk fetch */
+/**  
+ * bulk fetch 
+ */
 export async function getAllKeys() {
    const allKeys = []
    if (!db) await initDB()
@@ -114,6 +87,9 @@ export async function getAllKeys() {
    return allKeys
 }
 
+/**
+ * Load a set of test records
+ */
 export async function loadTestSet() {
    if (!db) await initDB()
    await db.set(["env", "cwd"], "./")

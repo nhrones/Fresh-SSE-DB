@@ -15,6 +15,10 @@ const DEV = true
 const StreamHeaders = {
    "content-type": "text/event-stream",
    "Access-Control-Allow-Origin": "*",
+   "Access-Control-Allow-Credentials": "true",
+   "Access-Control-Allow-Headers":
+   "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With",
+   "Access-Control-Allow-Methods": "POST, OPTIONS, GET, PUT, DELETE",
    "Cache-Control": "no-cache"
 }
 
@@ -31,15 +35,6 @@ export const kv = await Deno.openKv();
 //export function registerClient(req: Request): Response {
 
 export const handler = (req: Request, _ctx: HandlerContext): Response => {
-
-    //const { searchParams } = new URL(_req.url);
-
-    //const id = searchParams.get('id') || ''
-    //if (DEV) console.log('Client registering for SSE -- id-', id)
-
-    //const connection = new SignalConnection(id)
-
-    //return connection.connect()
 
    if (DEV) console.info('Started SSE Stream! - ', req.url)
 
