@@ -1,4 +1,5 @@
 // deno-lint-ignore-file no-explicit-any
+
 //@ts-ignore ?
 let db: Deno.Kv
 async function initDB() { 
@@ -6,9 +7,7 @@ async function initDB() {
    db = await Deno.openKv();
 }  
 
-/**
- * delete a record
- */
+/** delete a record */
 export async function deleteRow(key: any[]) {
    if (!db) await initDB()
    const result = await db.delete(key);
@@ -16,18 +15,14 @@ export async function deleteRow(key: any[]) {
    return result
 }
 
-/**
- * get a record
- */
+/** get a record */
 export async function getRow(key: any[], _version: string) {
    if (!db) await initDB()
    const result = await db.get(key)
    return result
 }
 
-/**
- * set a record
- */
+/** set a record */
 export async function setRow(key: any[], value: any) {
    if (!db) await initDB()
    const result = await db.set(key, value);
@@ -39,9 +34,7 @@ export async function setRow(key: any[], value: any) {
    return result
 }
 
-/**
- *  bulk fetch - get record collection 
- */
+/** bulk fetch - get record collection */
 export async function getAll() {
    const  cache = new Map()
    if (!db) await initDB()
@@ -60,9 +53,7 @@ export async function getAll() {
    return Array.from(cache.entries())
 }
 
-/** 
- * delete all rows from the db
- */
+/** delete all rows from the db */
 export async function clearAll() {
    if (!db) await initDB()
    getAllKeys()
@@ -73,9 +64,7 @@ export async function clearAll() {
       })
 }
 
-/**  
- * bulk fetch 
- */
+/** bulk key fetch */
 export async function getAllKeys() {
    const allKeys = []
    if (!db) await initDB()
@@ -86,9 +75,7 @@ export async function getAllKeys() {
    return allKeys
 }
 
-/**
- * Load a set of test records
- */
+/** Load a set of test records */
 export async function loadTestSet() {
    if (!db) await initDB()
    await db.set(["env", "cwd"], "./")
@@ -103,9 +90,7 @@ export async function loadTestSet() {
 }
 
 
-/**
- * Fire an event reporting a DenoKv record mutation
- */
+/** Fires an event reporting a DenoKv record mutation. */
 const fireMutationEvent = (rowID: number, type: string) => {
    const bc = new BroadcastChannel("sse-rpc")
    bc.postMessage({ txID: -1, procedure: "MUTATION", params: { rowID, type } })

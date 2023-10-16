@@ -2,16 +2,16 @@
 // This file SHOULD be checked into source version control.
 // This file is automatically updated during development when running `dev.ts`.
 
-import * as $0 from "./routes/SSERPC/Registration.ts";
-import * as $1 from "./routes/SSERPC/Requests.ts";
-import * as $2 from "./routes/SSERPC/dbRPC.ts";
+import * as $0 from "./routes/SSERPC/remoteProcedures.ts";
+import * as $1 from "./routes/SSERPC/rpcRequests.ts";
+import * as $2 from "./routes/SSERPC/sseRegistration.ts";
 import * as $3 from "./routes/index.tsx";
 
 const manifest = {
   routes: {
-    "./routes/SSERPC/Registration.ts": $0,
-    "./routes/SSERPC/Requests.ts": $1,
-    "./routes/SSERPC/dbRPC.ts": $2,
+    "./routes/SSERPC/remoteProcedures.ts": $0,
+    "./routes/SSERPC/rpcRequests.ts": $1,
+    "./routes/SSERPC/sseRegistration.ts": $2,
     "./routes/index.tsx": $3,
   },
   islands: {},

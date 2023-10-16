@@ -3,7 +3,7 @@ import {
    getRow,
    getAll,
    setRow,
-} from './dbRPC.ts' 
+} from './remoteProcedures.ts' 
  
 import { HandlerContext } from "$fresh/server.ts";
 
