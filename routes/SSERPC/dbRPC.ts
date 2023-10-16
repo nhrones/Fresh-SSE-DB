@@ -1,4 +1,3 @@
-/// <reference lib="deno.unstable"
 // deno-lint-ignore-file no-explicit-any
 //@ts-ignore ?
 let db: Deno.Kv

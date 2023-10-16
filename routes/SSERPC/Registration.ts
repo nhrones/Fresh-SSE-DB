@@ -1,17 +1,15 @@
-/// <reference lib="deno.unstable"
 import {
    deleteRow,
    getRow,
    getAll,
    setRow,
-} from './db.ts' 
+} from './dbRPC.ts' 
  
 import { HandlerContext } from "$fresh/server.ts";
 
 const DEV = true
-/** 
- * SSE stream headers 
- */
+
+/** SSE stream headers */
 const StreamHeaders = {
    "content-type": "text/event-stream",
    "Access-Control-Allow-Origin": "*",
@@ -27,20 +25,14 @@ const StreamHeaders = {
 export const kv = await Deno.openKv();
 
 /** 
- * Subscribes a client to a Server Sent Event stream 
- *    
+ * Subscribes a client to a Server Sent Event stream   
  * This stream supports remote DB transaction procedures (SSE-RPC)     
  * @param (Request) req - the original http request object    
  */
-//export function registerClient(req: Request): Response {
-
 export const handler = (req: Request, _ctx: HandlerContext): Response => {
 
    if (DEV) console.info('Started SSE Stream! - ', req.url)
 
-   /** 
-    * each client gets its own BroadcastChannel instance
-    */
    const thisChannel = new BroadcastChannel("sse-rpc");
 
    // our SSE stream to the client
@@ -60,7 +52,7 @@ export const handler = (req: Request, _ctx: HandlerContext): Response => {
             // calling Snapshot procedures
             switch (procedure) {
 
-               /** A mutation event - fired by kvdb.ts */
+               // A mutation event - fired by kvdb.ts
                case "MUTATION": {
                   if (DEV) console.log(`MUTATION event - id: ${txID}, row: ${params.rowID}, type: ${params.type}`)
                   thisError = null
@@ -68,7 +60,7 @@ export const handler = (req: Request, _ctx: HandlerContext): Response => {
                   break;
                }
 
-               /** delete a row */
+               // delete a row
                case "DELETE": {
                   await deleteRow(key)
                      thisError = null
@@ -76,7 +68,7 @@ export const handler = (req: Request, _ctx: HandlerContext): Response => {
                   break;
                }
 
-               /** Fetch a row */
+               // Fetch a row
                case "GET": {
                   const result = await getRow(key, vs)
                   thisError = null
@@ -84,10 +76,9 @@ export const handler = (req: Request, _ctx: HandlerContext): Response => {
                   break;
                }
 
-               /**
-                * Set the value for the given key in the database. 
-                * If a value already exists for the key, it will be overwritten.
-                */
+               
+               // Set the value for the given key in the database. 
+               // If a value already exists for the key, it will be overwritten.
                case "SET": {
                   const result = await setRow(key, params.value);
                   if (result.versionstamp === null) {
@@ -100,16 +91,15 @@ export const handler = (req: Request, _ctx: HandlerContext): Response => {
                   break;
                }
 
-               /** 
-                * Return all records 
-                */
+               
+               // Return all records 
                case 'GETALL': {
                   const resultSet = await getAll()
                   thisResult = JSON.stringify(resultSet)
                   break;
                }
 
-               /** default fall through */
+               // default fall through 
                default: {
                   console.log('handling - default')
                   thisError = 'Unknown procedure called!';
@@ -118,7 +108,7 @@ export const handler = (req: Request, _ctx: HandlerContext): Response => {
                }
             }
 
-            /** Build & stream SSE reply */
+            // Build & stream SSE reply 
             const reply = JSON.stringify({
                txID: txID,
                error: thisError,
