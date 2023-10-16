@@ -7,5 +7,5 @@ See the files in /routes/SSERPC/.
 This set of files is all that is required to add Remote Access to the db.     
 
 ### Usage
-With the TreeClient app opened:      
+With the TreeClient app started:  https://nhrones.github.io/KvRPC_TreeClient/    
 Select the **Fresh Example** from the dropdown list.    
