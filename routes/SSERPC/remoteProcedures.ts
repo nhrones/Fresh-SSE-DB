@@ -11,7 +11,7 @@ async function initDB() {
 export async function deleteRow(key: any[]) {
    if (!db) await initDB()
    const result = await db.delete(key);
-   fireMutationEvent(key[1], "RowDeleted")
+   fireMutationEvent(key, "RowDeleted")
    return result
 }
 
@@ -27,7 +27,7 @@ export async function setRow(key: any[], value: any) {
    if (!db) await initDB()
    const result = await db.set(key, value);
    if (result.versionstamp) {
-      fireMutationEvent(key[1], "SetRow")
+      fireMutationEvent(key, "SetRow")
    } else {
       console.error('kvdb.setRow failed!')
    }
@@ -91,8 +91,8 @@ export async function loadTestSet() {
 
 
 /** Fires an event reporting a DenoKv record mutation. */
-const fireMutationEvent = (rowID: number, type: string) => {
+const fireMutationEvent = (key: any[], type: string) => {
    const bc = new BroadcastChannel("sse-rpc")
-   bc.postMessage({ txID: -1, procedure: "MUTATION", params: { rowID, type } })
+   bc.postMessage({ txID: -1, procedure: "MUTATION", params: { key, type } })
    bc.close();
 }
