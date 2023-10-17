@@ -46,8 +46,7 @@ export const handler = (req: Request, _ctx: HandlerContext): Response => {
 
             let thisError: string | null = null
             let thisResult = null
-            const { collection, id, vs } = params
-            const key = [collection, id]
+            const { key, vs } = params
 
             // calling db procedures
             switch (procedure) {
