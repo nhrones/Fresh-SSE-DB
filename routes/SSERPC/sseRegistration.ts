@@ -49,10 +49,10 @@ export const handler = (req: Request, _ctx: HandlerContext): Response => {
             const { collection, id, vs } = params
             const key = [collection, id]
 
-            // calling Snapshot procedures
+            // calling db procedures
             switch (procedure) {
 
-               // A mutation event - fired by kvdb.ts
+               // A mutation event - fired in remoteProcedures.ts
                case "MUTATION": {
                   if (DEV) console.log(`MUTATION event - id: ${txID}, row: ${params.rowID}, type: ${params.type}`)
                   thisError = null
