@@ -5,7 +5,7 @@ import {
    setRow,
 } from './remoteProcedures.ts' 
  
-import { HandlerContext } from "$fresh/server.ts";
+//import { HandlerContext } from "$fresh/server.ts";
 
 const DEV = true
 
@@ -29,7 +29,7 @@ export const kv = await Deno.openKv();
  * This stream supports remote DB transaction procedures (SSE-RPC)     
  * @param (Request) req - the original http request object    
  */
-export const handler = (req: Request, _ctx: HandlerContext): Response => {
+export const handler = (req: Request, _ctx: any): Response => {
 
    if (DEV) console.info('Started SSE Stream! - ', req.url)
 
@@ -45,7 +45,7 @@ export const handler = (req: Request, _ctx: HandlerContext): Response => {
             if (DEV) console.log(`sse got - txID: ${txID}, procedure: ${procedure}, params: ${JSON.stringify(params)}`)
 
             let thisError: string | null = null
-            let thisResult = null
+            let thisResult: string | null = null
             const { key, vs } = params
 
             // calling db procedures
