@@ -4,14 +4,14 @@
 
 import * as $0 from "./routes/SSERPC/remoteProcedures.ts";
 import * as $1 from "./routes/SSERPC/rpcRequests.ts";
-import * as $2 from "./routes/SSERPC/sseRegistration.ts";
+import * as $2 from "./routes/SSERPC/kvRegistration.ts";
 import * as $3 from "./routes/index.tsx";
 
 const manifest = {
   routes: {
     "./routes/SSERPC/remoteProcedures.ts": $0,
     "./routes/SSERPC/rpcRequests.ts": $1,
-    "./routes/SSERPC/sseRegistration.ts": $2,
+    "./routes/SSERPC/kvRegistration.ts": $2,
     "./routes/index.tsx": $3,
   },
   islands: {},
