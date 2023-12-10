@@ -2,20 +2,24 @@
 // This file SHOULD be checked into source version control.
 // This file is automatically updated during development when running `dev.ts`.
 
-import * as $0 from "./routes/SSERPC/remoteProcedures.ts";
-import * as $1 from "./routes/SSERPC/rpcRequests.ts";
-import * as $2 from "./routes/SSERPC/kvRegistration.ts";
-import * as $3 from "./routes/index.tsx";
+import * as $SSERPC_kvRegistration from "./routes/SSERPC/kvRegistration.ts";
+import * as $SSERPC_remoteProcedures from "./routes/SSERPC/remoteProcedures.ts";
+import * as $SSERPC_rpcRequests from "./routes/SSERPC/rpcRequests.ts";
+import * as $_app from "./routes/_app.tsx";
+import * as $index from "./routes/index.tsx";
+
+import { type Manifest } from "$fresh/server.ts";
 
 const manifest = {
   routes: {
-    "./routes/SSERPC/remoteProcedures.ts": $0,
-    "./routes/SSERPC/rpcRequests.ts": $1,
-    "./routes/SSERPC/kvRegistration.ts": $2,
-    "./routes/index.tsx": $3,
+    "./routes/SSERPC/kvRegistration.ts": $SSERPC_kvRegistration,
+    "./routes/SSERPC/remoteProcedures.ts": $SSERPC_remoteProcedures,
+    "./routes/SSERPC/rpcRequests.ts": $SSERPC_rpcRequests,
+    "./routes/_app.tsx": $_app,
+    "./routes/index.tsx": $index,
   },
   islands: {},
   baseUrl: import.meta.url,
-};
+} satisfies Manifest;
 
 export default manifest;
